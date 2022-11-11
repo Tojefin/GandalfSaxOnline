@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gandalf Sax Online</title>
+  <style>
+    * {margin: 0;}
+    body {overflow: hidden;}
+    video {width: 100vw; height: 100vh; object-fit: cover;}
+  </style>
+</head>
+<body>
+  <video controls muted loop src="gandalfSax.mp4"></video>
+  
+  <script type="module">
+    const video = document.querySelector('video')
+    import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
+    const socket = io();
+
+    video.addEventListener("play", (e) => {
+      socket.emit('play')
+    })
+    video.addEventListener("pause", (e) => {
+      socket.emit('pause')
+    })
+    video.addEventListener("ended", (e) => {
+      socket.emit('play')
+    })
+
+    socket.on("play", () => {
+      console.log('Play')
+      video.play()
+      video.currentTime = 0
+    })
+    socket.on("pause", () => {
+      console.log('Pause')
+      video.pause()
+    })
+  </script>
+</body>
+</html>
