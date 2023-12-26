@@ -6,5 +6,5 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - '80:80'
+      - '1100:80'
     command: node index.js
